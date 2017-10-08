@@ -1,0 +1,4 @@
+face_frontalization.egg-info/*
+dist/*
+face_frontalization/__pycache__/*
+

@@ -15,8 +15,7 @@ setup(
     long_description=open('README.rst').read(),
     packages=['face_frontalization'],
     platforms='any',
-    requires=['dlib', 'numpy', 'matplotlib'],
-
+    install_requires=['dlib', 'numpy', 'matplotlib', 'opencv-python==3.1.0.4'],
     classifiers=[
         'Programming Language :: Python :: 3',
         'Intended Audience :: Developers',

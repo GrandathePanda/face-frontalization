@@ -4,7 +4,6 @@ import dlib
 import os
 import numpy as np
 
-this_path = os.path.dirname(__file__)
 
 def _shape_to_np(shape):
     xy = []
@@ -14,10 +13,12 @@ def _shape_to_np(shape):
     return xy
 
 
-def get_landmarks(img):
+def get_landmarks(img, path='./dlib_models'):
     # if not automatically downloaded, get it from:
     # http://sourceforge.net/projects/dclib/files/dlib/v18.10/shape_predictor_68_face_landmarks.dat.bz2
-    predictor_path = this_path + "/dlib_models/shape_predictor_68_face_landmarks.dat"
+    predictor_path = path + "/shape_predictor_68_face_landmarks.dat"
+    if(not os.path.isfile(predictor_path)):
+        raise ArgumentError('Predictor file not found!')
     detector = dlib.get_frontal_face_detector()
     predictor = dlib.shape_predictor(predictor_path)
 

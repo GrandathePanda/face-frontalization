@@ -1,23 +1,8 @@
 __author__ = 'Douglas'
 
-import scipy.io as scio
 import cv2
 import numpy as np
 np.set_printoptions(formatter={'float_kind': lambda x: "%.4f" % x})
-
-
-class ThreeD_Model:
-    def __init__(self, path, name):
-        self.load_model(path, name)
-
-    def load_model(self, path, name):
-        model = scio.loadmat(path)[name]
-        self.out_A = np.asmatrix(model['outA'][0, 0], dtype='float32') #3x3
-        self.size_U = model['sizeU'][0, 0][0] #1x2
-        self.model_TD = np.asarray(model['threedee'][0,0], dtype='float32') #68x3
-        self.indbad = model['indbad'][0, 0]#0x1
-        self.ref_U = np.asarray(model['refU'][0,0])
-
 
 
 def frontalize(img, proj_matrix, ref_U, eyemask):
@@ -58,7 +43,7 @@ def frontalize(img, proj_matrix, ref_U, eyemask):
     frontal_raw = frontal_raw.reshape((320, 320, 3), order='F')
 
     # which side has more occlusions?
-    midcolumn = np.round(ref_U.shape[1]/2)
+    midcolumn = int(np.round(ref_U.shape[1]/2))
     sumaccs = synth_frontal_acc.sum(axis=0)
     sum_left = sumaccs[0:midcolumn].sum()
     sum_right = sumaccs[midcolumn+1:].sum()

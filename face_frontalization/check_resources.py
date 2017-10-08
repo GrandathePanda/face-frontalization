@@ -8,8 +8,9 @@ def download_file(url, dest):
     u = urllib.request.urlopen(url)
     f = open(dest+"/"+file_name, 'wb')
     meta = u.info()
-    file_size = int(meta.getheaders("Content-Length")[0])
+    file_size = int(meta.get("Content-Length")[0])
     print("Downloading: %s Size: %s (~%4.2fMB)" % (file_name, file_size, (file_size/1024./1024.)))
+    print(meta.get('Content-Length'))
 
     file_size_dl = 0
     block_sz = 8192
@@ -36,8 +37,8 @@ def extract_bz2(fpath):
     print("Done!")
 
 
-def check_dlib_landmark_weights():
-    dlib_models_folder = "dlib_models"
+def check_dlib_landmark_weights(path='./dlib_models'):
+    dlib_models_folder = path
     if(not os.path.isdir(dlib_models_folder)):
         os.mkdir(dlib_models_folder)
     if(not os.path.isfile(dlib_models_folder+"/shape_predictor_68_face_landmarks.dat")):
